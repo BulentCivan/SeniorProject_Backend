@@ -20,6 +20,8 @@ namespace api.Data
         public DbSet<Test> Tests { get;set;}
         public DbSet<Result> Results { get;set;}
         public DbSet<Question> Questions { get;set;}
+        public DbSet<Paradigm> Paradigms { get;set;}
+
 
         protected override void OnModelCreating(ModelBuilder builder){
             base.OnModelCreating(builder);

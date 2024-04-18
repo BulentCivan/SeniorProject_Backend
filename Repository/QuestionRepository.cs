@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos.Question;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +46,7 @@ namespace api.Repository
         }
 
 
-        public async Task<Question?> UpdateAsync(int id, Question questionModel)
+        public async Task<Question?> UpdateAsync(int id, UpdateQuestionRequestDto questionDto)
         {
             var existingQuestion = await _context.Questions.FindAsync(id);
 
@@ -54,8 +55,8 @@ namespace api.Repository
                 return null;
             }
 
-            existingQuestion.Content=questionModel.Content;
-            existingQuestion.Type=questionModel.Type;
+            existingQuestion.Content=questionDto.Content;
+            existingQuestion.Type=questionDto.Type;
             
             await _context.SaveChangesAsync();
 

@@ -66,7 +66,7 @@ namespace api.Controllers
         [HttpPut]
         [Route("{id:int}")]
         public async Task<IActionResult> Update ([FromRoute] int id,[FromBody] UpdateQuestionRequestDto updateDto) {
-            var question = await _questionRepo.UpdateAsync(id, updateDto.ToQuestionFromUpdate());
+            var question = await _questionRepo.UpdateAsync(id, updateDto);
             if(question == null){
                 return NotFound ("Question not found");
             }

@@ -89,6 +89,7 @@ options.TokenValidationParameters = new TokenValidationParameters
 builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IParadigmRepository, ParadigmRepository>();
 
 var app = builder.Build();
 

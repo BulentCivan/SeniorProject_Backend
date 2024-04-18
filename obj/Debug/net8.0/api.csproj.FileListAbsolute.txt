@@ -146,3 +146,4 @@ C:\Users\bulen\OneDrive\Masaüstü\api\bin\Debug\net8.0\Microsoft.AspNetCore.Ide
 C:\Users\bulen\OneDrive\Masaüstü\api\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\bulen\OneDrive\Masaüstü\api\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 C:\Users\bulen\OneDrive\Masaüstü\api\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\Users\bulen\OneDrive\Masaüstü\api\obj\Debug\net8.0\api.sourcelink.json

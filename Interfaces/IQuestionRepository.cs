@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Question;
 using api.Models;
 
 namespace api.Interfaces
@@ -15,6 +16,6 @@ namespace api.Interfaces
 
         Task<Question?> DeleteAsync(int id);
 
-        Task<Question?> UpdateAsync(int id,Question questionModel);
+        Task<Question?> UpdateAsync(int id,UpdateQuestionRequestDto questionDto);
     }
 }
