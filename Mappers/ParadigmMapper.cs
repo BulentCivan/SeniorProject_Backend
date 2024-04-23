@@ -34,6 +34,7 @@ namespace api.Mappers
             return new Paradigm
             {
                 Content = paradigmDto.Content
+
             
             };
         }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "IBqjJyI5RwfDW3tbt08hcTOMthRuA+rylI23AJYVWJRGHh78NjUf79trlfNnqcEYybjcuhYQgsH5MFnfUoUHmQ==",
+  "dgSpecHash": "R6ncQU+A0TIS0iqoRnwElMpc/Auxsw5Na96VkMsA5kcJbLJifOROXqhCE1Mksc5w1N8rSZUQZMkcEwhzZMRxXQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\bulen\\OneDrive\\Masaüstü\\api\\api.csproj",
   "expectedPackageFiles": [
@@ -37,6 +37,7 @@
     "C:\\Users\\bulen\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\microsoft.extensions.dependencymodel\\8.0.0\\microsoft.extensions.dependencymodel.8.0.0.nupkg.sha512",
+    "C:\\Users\\bulen\\.nuget\\packages\\microsoft.extensions.http\\2.1.0\\microsoft.extensions.http.2.1.0.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\microsoft.extensions.identity.core\\8.0.3\\microsoft.extensions.identity.core.8.0.3.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\microsoft.extensions.identity.stores\\8.0.3\\microsoft.extensions.identity.stores.8.0.3.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\microsoft.extensions.logging\\8.0.0\\microsoft.extensions.logging.8.0.0.nupkg.sha512",
@@ -57,6 +58,7 @@
     "C:\\Users\\bulen\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\newtonsoft.json.bson\\1.0.2\\newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "C:\\Users\\bulen\\.nuget\\packages\\openai\\1.11.0\\openai.1.11.0.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\bulen\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

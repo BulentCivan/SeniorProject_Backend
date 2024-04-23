@@ -1,3 +1,4 @@
+using api.Configurations;
 using api.Data;
 using api.Interfaces;
 using api.Models;
@@ -16,6 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<OpenAIConfig>(builder.Configuration.GetSection("OpenAI"));
 
 builder.Services.AddSwaggerGen(option =>
 {
@@ -90,6 +93,7 @@ builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IParadigmRepository, ParadigmRepository>();
+builder.Services.AddScoped<IOpenAIService, OpenAIService>();
 
 var app = builder.Build();
 

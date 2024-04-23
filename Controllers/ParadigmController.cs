@@ -17,13 +17,12 @@ namespace api.Controllers
     public class ParadigmController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        
         private readonly IParadigmRepository _paradigmRepo;
-        
-
-        public ParadigmController(ApplicationDBContext context, IParadigmRepository paradigmRepo){
+        private readonly IOpenAIService _openAIService;
+        public ParadigmController(ApplicationDBContext context, IParadigmRepository paradigmRepo, IOpenAIService openAIService){
             _paradigmRepo = paradigmRepo;
             _context = context;
+            _openAIService = openAIService;
         }
 
         [HttpGet]
@@ -50,6 +49,7 @@ namespace api.Controllers
         public async Task<IActionResult> Create([FromBody] CreateParadigmRequestDto paradigmDto)
         {
             var paradigmModel = paradigmDto.ToParadigmFromCreate();
+            paradigmModel.Result=_openAIService.EvaluateText(paradigmModel.Content).Result.ToString();
             await _paradigmRepo.CreateAsync(paradigmModel);
             return CreatedAtAction(nameof(GetById), new{id=paradigmModel.Id}, paradigmModel.ToParadigmDto());
         }

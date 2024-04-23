@@ -41,6 +41,18 @@ namespace api.Controllers
                     UserSurname = registerDto.UserSurname,
                     Email = registerDto.Email,
                     Age = (int)registerDto.Age,
+                    Income = (int)registerDto.Income,
+                    Gender = registerDto.Gender,
+                    IsMarried = registerDto.IsMarried,
+                    Department = registerDto.Department,
+                    Class = registerDto.Class,
+                    Accomodation = registerDto.Accomodation,
+                    HasUnease = registerDto.HasUnease,
+                    HasUneaseMedicine = registerDto.HasUneaseMedicine,
+                    HasPsychologicalDisorder =  registerDto.HasUneaseMedicine,
+                    HasPsychologicalDisorderMedicine= registerDto.HasPsychologicalDisorderMedicine,
+                    HasPsychologicalTreatment = registerDto.HasUneaseMedicine
+                    
 
                 };
 
@@ -80,7 +92,7 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.UserName.ToLower());
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == loginDto.UserMail.ToLower());
 
             if (user == null) return Unauthorized("Invalid username!");
 
@@ -98,5 +110,6 @@ namespace api.Controllers
                 }
             );
         }
+
     }
 }
