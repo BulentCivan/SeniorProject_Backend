@@ -19,7 +19,7 @@ namespace api.Service
         {
             var api = new OpenAI_API.OpenAIAPI(_openAIConfig.Key);
             var chat = api.Chat.CreateConversation();
-            chat.AppendSystemMessage("I will give you a text in turkish and you will response if it is positive , negative or notr. You must only response positive, negative and notr");
+            chat.AppendSystemMessage("I will give you a text in turkish and you will response if it is positive , negative or neutral. You must only response positive, negative and neutral");
             chat.AppendUserInput(text);
             var response = await chat.GetResponseFromChatbotAsync();
             return response;
