@@ -95,6 +95,17 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IParadigmRepository, ParadigmRepository>();
 builder.Services.AddScoped<IOpenAIService, OpenAIService>();
 
+ builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -108,7 +119,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("CorsPolicy");
 app.MapControllers();
 
 app.Run();
