@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eccec9c7-4f5e-4c54-8e29-91d4f7547571",
+                            Id = "136e5041-c4b0-480b-9984-a5f2a98a8814",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "637461cf-602c-4894-aa78-541add20ddbb",
+                            Id = "729d0299-b1a0-4e6a-b518-6cd993d79934",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -251,6 +251,9 @@ namespace api.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int>("ProgressLevel")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
