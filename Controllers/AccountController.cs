@@ -37,6 +37,7 @@ namespace api.Controllers
                 }
 
                 var appUser = new AppUser{
+                    
                     UserName = registerDto.UserName,
                     UserSurname = registerDto.UserSurname,
                     Email = registerDto.Email,
@@ -51,7 +52,8 @@ namespace api.Controllers
                     HasUneaseMedicine = registerDto.HasUneaseMedicine,
                     HasPsychologicalDisorder =  registerDto.HasUneaseMedicine,
                     HasPsychologicalDisorderMedicine= registerDto.HasPsychologicalDisorderMedicine,
-                    HasPsychologicalTreatment = registerDto.HasUneaseMedicine
+                    HasPsychologicalTreatment = registerDto.HasUneaseMedicine,
+                    ProgressLevel = 1
                     
 
                 };
@@ -66,7 +68,8 @@ namespace api.Controllers
                             new NewUserDto{
                                 UserName = appUser.UserName,
                                 Email = appUser.Email,
-                                Token = _tokenService.CreateToken(appUser)
+                                Token = _tokenService.CreateToken(appUser),
+                                ProgressLevel = appUser.ProgressLevel
                             }
                         );
                     }else{
@@ -103,10 +106,10 @@ namespace api.Controllers
             }
 
             return Ok(
-                new NewUserDto{
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    Token = _tokenService.CreateToken(user)
+                new LoginResponseDto{
+                    
+                    Token = _tokenService.CreateToken(user),
+                    ProgressLevel = user.ProgressLevel
                 }
             );
         }

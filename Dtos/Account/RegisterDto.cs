@@ -30,5 +30,7 @@ namespace api.Dtos.Account
         public bool HasPsychologicalDisorderMedicine { get;  set; }
         public bool HasPsychologicalTreatment { get;  set; }
         public int Income { get;  set; }
+        
+      
     }
 }

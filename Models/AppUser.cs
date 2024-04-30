@@ -25,6 +25,7 @@ namespace api.Models
         public bool HasPsychologicalDisorderMedicine { get;  set; }
         public bool HasPsychologicalTreatment { get;  set; }
         public int Income { get;  set; }
+        public int ProgressLevel { get; set; }
 
 
     }
