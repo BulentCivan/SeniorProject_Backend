@@ -27,6 +27,8 @@ namespace api.Models
         public int Income { get;  set; }
         public int ProgressLevel { get; set; }
 
+        public List<Profile> Profiles { get; set; } = new List<Profile>();
+        public List<UserParadigm> UserParadigms{ get; set; } = new List<UserParadigm>();
 
     }
 }

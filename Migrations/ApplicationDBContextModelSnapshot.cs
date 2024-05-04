@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eccec9c7-4f5e-4c54-8e29-91d4f7547571",
+                            Id = "95e973a0-1d18-4e8c-80f3-7cc82d935f40",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "637461cf-602c-4894-aa78-541add20ddbb",
+                            Id = "5f3faf7d-3b51-4664-9596-762d098db987",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -252,6 +252,9 @@ namespace api.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ProgressLevel")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -302,6 +305,21 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Paradigms");
+                });
+
+            modelBuilder.Entity("api.Models.Profile", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ResultId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "ResultId");
+
+                    b.HasIndex("ResultId");
+
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("api.Models.Question", b =>
@@ -376,6 +394,21 @@ namespace api.Migrations
                     b.ToTable("Tests");
                 });
 
+            modelBuilder.Entity("api.Models.UserParadigm", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ParadigmId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "ParadigmId");
+
+                    b.HasIndex("ParadigmId");
+
+                    b.ToTable("UserParadigms");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -427,6 +460,25 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("api.Models.Profile", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany("Profiles")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Result", "Result")
+                        .WithMany("Profiles")
+                        .HasForeignKey("ResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Result");
+                });
+
             modelBuilder.Entity("api.Models.Question", b =>
                 {
                     b.HasOne("api.Models.Test", "Test")
@@ -443,6 +495,42 @@ namespace api.Migrations
                         .HasForeignKey("api.Models.Result", "TestId");
 
                     b.Navigation("Test");
+                });
+
+            modelBuilder.Entity("api.Models.UserParadigm", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany("UserParadigms")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Paradigm", "Paradigm")
+                        .WithMany("UserParadigms")
+                        .HasForeignKey("ParadigmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Paradigm");
+                });
+
+            modelBuilder.Entity("api.Models.AppUser", b =>
+                {
+                    b.Navigation("Profiles");
+
+                    b.Navigation("UserParadigms");
+                });
+
+            modelBuilder.Entity("api.Models.Paradigm", b =>
+                {
+                    b.Navigation("UserParadigms");
+                });
+
+            modelBuilder.Entity("api.Models.Result", b =>
+                {
+                    b.Navigation("Profiles");
                 });
 
             modelBuilder.Entity("api.Models.Test", b =>

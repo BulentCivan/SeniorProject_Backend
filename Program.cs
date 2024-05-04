@@ -94,6 +94,7 @@ builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IParadigmRepository, ParadigmRepository>();
 builder.Services.AddScoped<IOpenAIService, OpenAIService>();
+builder.Services.AddScoped<IUserParadigmsRepository, UserParadigmsRepository>();
 
  builder.Services.AddCors(options =>
             {
