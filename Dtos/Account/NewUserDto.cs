@@ -10,7 +10,7 @@ namespace api.Dtos.Account
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
-
+       
         public string Gender { get;  set; }
 
         public string IsMarried { get;  set; }
