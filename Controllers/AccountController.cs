@@ -43,7 +43,7 @@ namespace api.Controllers
                     Email = registerDto.Email,
                     CellPhone = registerDto.CellPhone,
                     Age = (int)registerDto.Age,
-                    MonthlyIncome = (int)registerDto.MonthlyIncome,
+                    MonthlyIncome = registerDto.MonthlyIncome,
                     Gender = registerDto.Gender,
                     MarialStatus = registerDto.MarialStatus,
                     EducationField = registerDto.EducationField,

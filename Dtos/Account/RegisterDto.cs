@@ -23,7 +23,7 @@ namespace api.Dtos.Account
         public string EducationLevel { get;  set; }
         public string LongestResidence { get;  set; }
        
-       public int MonthlyIncome { get;  set; }
+       public string MonthlyIncome { get;  set; }
        
         public bool ChronicCondition { get;  set; } 
         public string ChronicConditionName { get;  set; }
