@@ -7,6 +7,6 @@ namespace api.Interfaces
 {
     public interface IOpenAIService
     {
-        Task<string> EvaluateText(string text);
+        Task<string> EvaluateText(string topic,string content);
     }
 }

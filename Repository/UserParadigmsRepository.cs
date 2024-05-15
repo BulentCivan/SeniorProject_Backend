@@ -24,6 +24,23 @@ namespace api.Repository
             return userParadigm;
         }
 
+
+        public async Task<UserParadigm> DeleteAsync(AppUser appUser, int paradigmId)
+        {
+            var userParadigmModel = await _context.UserParadigms.FirstOrDefaultAsync( x => x.AppUserId == appUser.Id && x.Paradigm.Id == paradigmId);
+
+            if (userParadigmModel == null)
+            {
+                return null;
+            }
+
+            _context.UserParadigms.Remove(userParadigmModel);
+            _context.SaveChanges();
+
+            return userParadigmModel;
+
+        }
+
         public async Task<List<Paradigm>> GetUserParadigms(AppUser user)
         {
             return await _context.UserParadigms.Where(p => p.AppUserId == user.Id)

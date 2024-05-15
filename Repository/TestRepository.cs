@@ -38,12 +38,12 @@ namespace api.Repository
 
         public async Task<List<Test>> GetAllAsync()
         {
-            return await _context.Tests.Include(c => c.Questions).ToListAsync();
+            return await _context.Tests.ToListAsync();
         }
 
         public async Task<Test?> GetByIdAsync(int id)
         {
-            return await _context.Tests.Include(c => c.Questions).FirstOrDefaultAsync(i => i.Id == id);
+            return await _context.Tests.FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public Task<bool> TestExist(int id)

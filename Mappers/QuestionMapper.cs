@@ -15,7 +15,7 @@ namespace api.Mappers
                 Content = questionModel.Content,
                 Type = questionModel.Type,
                 Answer=questionModel.Answer,
-                TestId = questionModel.TestId
+                //TestId = questionModel.TestId
 
             };
         }
@@ -26,7 +26,7 @@ namespace api.Mappers
 
                 Content = questionDto.Content,
                 Type = questionDto.Type,
-                TestId = testId
+                //TestId = testId
 
             };
         }

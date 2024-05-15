@@ -74,6 +74,17 @@ namespace api.Controllers
             return Ok(question.ToQuestionDto());
         }
 
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Solve ([FromRoute] int id, int answer) {
+            var question = await _questionRepo.SolveAsync(id, answer);
+            if(question == null){
+                return NotFound ("Question not found");
+            }
+
+            return Ok(question.ToQuestionDto());
+        }
+
         
     }
 }

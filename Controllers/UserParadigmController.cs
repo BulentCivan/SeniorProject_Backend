@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Extensions;
 using api.Interfaces;
+using api.Mappers;
 using api.Models;
 using api.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-    [Route("api/profile")]
+    [Route("api/UserParadigm")]
     [ApiController]
     public class UserParadigmController : ControllerBase
     {
@@ -26,7 +27,7 @@ namespace api.Controllers
         }   
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetUserParadigms()
         {
             var userName=User.GetUsername();
@@ -36,7 +37,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> AddUserParadigms(int paradigmId)
         {
             var userName=User.GetUsername();
@@ -66,6 +67,26 @@ namespace api.Controllers
                 return Created();
             }
 
+            
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> DeleteUserParadigms(int paradigmId){
+            var userName=User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(userName);
+            var userParadigms = await _userParadigmsRepository.GetUserParadigms(appUser);
+            var filteredParadigm = userParadigms.Where(s => s.Id == paradigmId).ToList();
+
+            if (filteredParadigm.Count() ==1)
+            {
+                await _userParadigmsRepository.DeleteAsync(appUser,paradigmId);
+            }
+            else
+            {
+                return BadRequest("Paradigm not found");
+            }
+            return Ok();
             
         }
     }

@@ -15,12 +15,12 @@ namespace api.Service
         {
             _openAIConfig = optionsMonitor.CurrentValue;
         }
-        public async Task<string> EvaluateText(string text)
+        public async Task<string> EvaluateText(string topic,string content)
         {
             var api = new OpenAI_API.OpenAIAPI(_openAIConfig.Key);
             var chat = api.Chat.CreateConversation();
-            chat.AppendSystemMessage("I will give you a text in turkish and you will response if it is positive , negative or neutral. You must only response positive, negative and neutral");
-            chat.AppendUserInput(text);
+            chat.AppendSystemMessage("I will give you a topic and a text in turkish and you will response if it is positive , negative about the given topic. You must only response positive, negative or if text is not relative with topic response neutral.");
+            chat.AppendUserInput("Konu: "+topic+" Paragraf: "+ content);
             var response = await chat.GetResponseFromChatbotAsync();
             return response;
         }

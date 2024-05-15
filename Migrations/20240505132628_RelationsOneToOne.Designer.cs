@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240505132628_RelationsOneToOne")]
+    partial class RelationsOneToOne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "10d09086-29b4-47e3-915b-db7fca61084d",
+                            Id = "beabd426-af98-40e3-89e8-17974334f259",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0d663e4e-ee75-4c7d-b192-1f9e54670f22",
+                            Id = "d06ca310-3615-4e16-aa18-cbdff46e4088",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -282,28 +285,6 @@ namespace api.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("api.Models.Mood", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("mood")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Moods");
-                });
-
             modelBuilder.Entity("api.Models.Paradigm", b =>
                 {
                     b.Property<int>("Id")
@@ -429,21 +410,6 @@ namespace api.Migrations
                     b.ToTable("TestQuestions");
                 });
 
-            modelBuilder.Entity("api.Models.UserMood", b =>
-                {
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("MoodId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AppUserId", "MoodId");
-
-                    b.HasIndex("MoodId");
-
-                    b.ToTable("UserMoods");
-                });
-
             modelBuilder.Entity("api.Models.UserParadigm", b =>
                 {
                     b.Property<string>("AppUserId")
@@ -557,25 +523,6 @@ namespace api.Migrations
                     b.Navigation("Test");
                 });
 
-            modelBuilder.Entity("api.Models.UserMood", b =>
-                {
-                    b.HasOne("api.Models.AppUser", "AppUser")
-                        .WithMany("UserMoods")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Models.Mood", "Mood")
-                        .WithMany("UserMoods")
-                        .HasForeignKey("MoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Mood");
-                });
-
             modelBuilder.Entity("api.Models.UserParadigm", b =>
                 {
                     b.HasOne("api.Models.AppUser", "AppUser")
@@ -599,14 +546,7 @@ namespace api.Migrations
                 {
                     b.Navigation("Profiles");
 
-                    b.Navigation("UserMoods");
-
                     b.Navigation("UserParadigms");
-                });
-
-            modelBuilder.Entity("api.Models.Mood", b =>
-                {
-                    b.Navigation("UserMoods");
                 });
 
             modelBuilder.Entity("api.Models.Paradigm", b =>

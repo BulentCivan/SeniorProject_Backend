@@ -13,9 +13,7 @@ namespace api.Models
         public string Content { get; set; } = string.Empty;
         public string Type { get; set; } 
         public int Answer { get; set; }
-        public int? TestId { get; set; }
-        //navigation prop
-        public Test? Test{ get; set; }
+        public List<TestQuestion> TestQuestions{ get; set;} = new List<TestQuestion>();
 
     }
 }

@@ -11,6 +11,7 @@ namespace api.Interfaces
     {
         Task<List<Test>> GetAllAsync();
         Task<Test?> GetByIdAsync(int id); //First or default
+        Test GetById(int id);
 
         Task<Test> CreateAsync(Test testModel);
 

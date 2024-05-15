@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Account;
+using api.Extensions;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Identity;
@@ -106,12 +107,79 @@ namespace api.Controllers
             }
 
             return Ok(
-                new LoginResponseDto{
+                new NewUserDto{
                     
                     Token = _tokenService.CreateToken(user),
-                    ProgressLevel = user.ProgressLevel
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    ProgressLevel = user.ProgressLevel,
+                    Gender = user.Gender,
+                    IsMarried = user.IsMarried,
+                    Department=user.Department,
+                    Class = user.Class,
+                    Accomodation = user.Accomodation,
+                    HasUnease = user.HasUnease,
+                    HasUneaseMedicine = user.HasUneaseMedicine,
+                    HasPsychologicalDisorder =  user.HasUneaseMedicine,
+                    HasPsychologicalDisorderMedicine= user.HasPsychologicalDisorderMedicine,
+                    HasPsychologicalTreatment = user.HasUneaseMedicine,
                 }
             );
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromBody] UpdateUserDto updateDto)
+        {
+            if (!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            var userName=User.GetUsername();
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null) return Unauthorized("User not found");
+
+            user.UserName=updateDto.UserName;
+            user.Gender=updateDto.Gender;
+            user.IsMarried=updateDto.IsMarried;
+            user.Department=updateDto.Department;
+            user.Class=updateDto.Class;
+            user.Accomodation=updateDto.Accomodation;
+            user.HasUnease=updateDto.HasUnease;
+            user.HasUneaseMedicine=updateDto.HasUneaseMedicine;
+            user.HasPsychologicalDisorder=updateDto.HasPsychologicalDisorder;
+            user.HasPsychologicalDisorderMedicine=updateDto.HasPsychologicalDisorderMedicine;
+            user.HasPsychologicalTreatment=updateDto.HasPsychologicalTreatment;
+            user.Income=updateDto.Income;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            return Ok(result);
+        }
+
+        [HttpPost("updatePassword")]
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordDto passwordDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == passwordDto.Email.ToLower());
+
+            if (user == null)
+            {
+                return Unauthorized("User not found");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, passwordDto.OldPassword, passwordDto.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok("Password updated successfully");
+            }
+
+            var errors = result.Errors.Select(e => e.Description);
+            return BadRequest(new { Errors = errors });
         }
 
     }

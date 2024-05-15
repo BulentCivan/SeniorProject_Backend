@@ -26,7 +26,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetAll(){
 
             var paradigms =await _paradigmRepo.GetAllAsync();
@@ -49,7 +49,7 @@ namespace api.Controllers
         public async Task<IActionResult> Create([FromBody] CreateParadigmRequestDto paradigmDto)
         {
             var paradigmModel = paradigmDto.ToParadigmFromCreate();
-            paradigmModel.Result=_openAIService.EvaluateText(paradigmModel.Content).Result.ToString();
+            paradigmModel.Result=_openAIService.EvaluateText(paradigmModel.Title,paradigmModel.Content).Result.ToString();
             await _paradigmRepo.CreateAsync(paradigmModel);
             return CreatedAtAction(nameof(GetById), new{id=paradigmModel.Id}, paradigmModel.ToParadigmDto());
         }
@@ -71,8 +71,8 @@ namespace api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var testModel =await _paradigmRepo.DeleteAsync(id);
-            if(testModel == null){
+            var paradigmModel =await _paradigmRepo.DeleteAsync(id);
+            if(paradigmModel == null){
                 return NotFound();
             }
 

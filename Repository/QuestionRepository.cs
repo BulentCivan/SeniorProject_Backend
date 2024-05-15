@@ -45,6 +45,21 @@ namespace api.Repository
             throw new NotImplementedException();
         }
 
+        public async Task<Question?> SolveASync(int id,int answer)
+        {
+            var existingQuestion = await _context.Questions.FindAsync(id);
+
+            if (existingQuestion == null)
+            {
+                return null;
+            }
+
+            existingQuestion.Answer = answer;
+            
+            await _context.SaveChangesAsync();
+
+            return existingQuestion;
+        }
 
         public async Task<Question?> UpdateAsync(int id, UpdateQuestionRequestDto questionDto)
         {

@@ -10,5 +10,6 @@ namespace api.Interfaces
     {
         Task<List<Paradigm>> GetUserParadigms(AppUser user);
         Task<UserParadigm> CreateAsync (UserParadigm userParadigm);
+        Task<UserParadigm> DeleteAsync (AppUser appUser, int paradigmId);
     }
 }

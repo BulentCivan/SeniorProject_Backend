@@ -11,9 +11,10 @@ namespace api.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public Result Result{ get; set; } = new Result();
+        public int Result{ get; set; } 
+        public int ResultId { get; set;}
 
-        public List<Question> Questions { get; set; } = new List<Question>();
+        public List<TestQuestion> TestQuestions { get; set; } = new List<TestQuestion>();
 
 
     }

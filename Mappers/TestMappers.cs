@@ -14,7 +14,7 @@ namespace api.Mappers
             {
                 Id = testModel.Id,
                 Name = testModel.Name,
-                Questions = testModel.Questions.Select(x => x.ToQuestionDto()).ToList()
+                //Questions = testModel.Questions.Select(x => x.ToQuestionDto()).ToList()
             };
         }
 

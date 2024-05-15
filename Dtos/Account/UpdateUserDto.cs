@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 
-namespace api.Models
+namespace api.Dtos.Account
 {
-    public class AppUser : IdentityUser
+    public class UpdateUserDto
     {
-        public string UserSurname { get;  set; }
-        public int Age { get;  set; }
+        public string UserName { get; set; }
+
         public string Gender { get;  set; }
 
         public string IsMarried { get;  set; }
@@ -25,9 +24,5 @@ namespace api.Models
         public bool HasPsychologicalDisorderMedicine { get;  set; }
         public bool HasPsychologicalTreatment { get;  set; }
         public int Income { get;  set; }
-        public int ProgressLevel { get; set; }
-        public List<UserParadigm> UserParadigms{ get; set; } = new List<UserParadigm>();
-        public List<UserMood> UserMoods{ get; set; } = new List<UserMood>();
-
     }
 }

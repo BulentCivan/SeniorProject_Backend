@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace api.Models
 {
-    [Table("Profiles")]
-    public class Profile
+    [Table("UserMoods")]
+    public class UserMood
     {
         public string AppUserId { get; set; }
-        public int ResultId { get; set;}
+        public int MoodId { get; set;}
         public AppUser AppUser { get; set; }
-        public Result Result { get; set; }
-
+        public Mood Mood { get; set; }
     }
 }
