@@ -11,21 +11,27 @@ namespace api.Dtos.Account
         public string Email { get; set; }
         public string Token { get; set; }
 
+        public string? UserSurname {get; set;} 
+        public int? Age {get; set;}
         public string Gender { get;  set; }
+        public string MarialStatus { get;  set; }
 
-        public string IsMarried { get;  set; }
-        
-        public string Department { get;  set; }
-        public string Class { get;  set; }
-        public string Accomodation { get;  set; }
-        public bool HasUnease { get;  set; } //Physical illnes
+        public string EducationField { get;  set; }
+        public string EducationLevel { get;  set; }
+        public string LongestResidence { get;  set; }
 
-        public bool HasUneaseMedicine { get;  set; }
-        public bool HasPsychologicalDisorder { get;  set; } //Psychological illnes
+        public string MonthlyIncome { get;  set; }
 
-        public bool HasPsychologicalDisorderMedicine { get;  set; }
-        public bool HasPsychologicalTreatment { get;  set; }
-        public int Income { get;  set; }
+        public bool ChronicCondition { get;  set; } 
+        public string ChronicConditionName { get;  set; }
+
+        public string ChronicConditionMed { get;  set; }
+        public bool PsychologicalCondition { get;  set; } 
+
+        public string PsychologicalConditionMed { get;  set; } 
+
+        public string ReceivingPsychoTreatment { get;  set; } 
+
         public int ProgressLevel { get;  set; }
 
     }

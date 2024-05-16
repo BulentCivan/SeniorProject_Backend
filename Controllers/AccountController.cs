@@ -43,17 +43,17 @@ namespace api.Controllers
                     UserSurname = registerDto.UserSurname,
                     Email = registerDto.Email,
                     Age = (int)registerDto.Age,
-                    Income = (int)registerDto.Income,
+                    MonthlyIncome = registerDto.MonthlyIncome,
                     Gender = registerDto.Gender,
-                    IsMarried = registerDto.IsMarried,
-                    Department = registerDto.Department,
-                    Class = registerDto.Class,
-                    Accomodation = registerDto.Accomodation,
-                    HasUnease = registerDto.HasUnease,
-                    HasUneaseMedicine = registerDto.HasUneaseMedicine,
-                    HasPsychologicalDisorder =  registerDto.HasUneaseMedicine,
-                    HasPsychologicalDisorderMedicine= registerDto.HasPsychologicalDisorderMedicine,
-                    HasPsychologicalTreatment = registerDto.HasUneaseMedicine,
+                    MarialStatus = registerDto.MarialStatus,
+                    EducationField = registerDto.EducationField,
+                    EducationLevel = registerDto.EducationLevel,
+                    LongestResidence = registerDto.LongestResidence,
+                    ChronicCondition = registerDto.ChronicCondition,
+                    ChronicConditionMed = registerDto.ChronicConditionMed,
+                    PsychologicalCondition =  registerDto.PsychologicalCondition,
+                    PsychologicalConditionMed= registerDto.PsychologicalConditionMed,
+                    ReceivingPsychoTreatment = registerDto.ReceivingPsychoTreatment,
                     ProgressLevel = 1
                     
 
@@ -114,15 +114,15 @@ namespace api.Controllers
                     UserName = user.UserName,
                     ProgressLevel = user.ProgressLevel,
                     Gender = user.Gender,
-                    IsMarried = user.IsMarried,
-                    Department=user.Department,
-                    Class = user.Class,
-                    Accomodation = user.Accomodation,
-                    HasUnease = user.HasUnease,
-                    HasUneaseMedicine = user.HasUneaseMedicine,
-                    HasPsychologicalDisorder =  user.HasUneaseMedicine,
-                    HasPsychologicalDisorderMedicine= user.HasPsychologicalDisorderMedicine,
-                    HasPsychologicalTreatment = user.HasUneaseMedicine,
+                    MarialStatus = user.MarialStatus,
+                    EducationField = user.EducationField,
+                    EducationLevel = user.EducationLevel,
+                    LongestResidence = user.LongestResidence,
+                    ChronicCondition = user.ChronicCondition,
+                    ChronicConditionMed = user.ChronicConditionMed,
+                    PsychologicalCondition =  user.PsychologicalCondition,
+                    PsychologicalConditionMed= user.PsychologicalConditionMed,
+                    ReceivingPsychoTreatment = user.ReceivingPsychoTreatment,
                 }
             );
         }
@@ -139,17 +139,20 @@ namespace api.Controllers
             if (user == null) return Unauthorized("User not found");
 
             user.UserName=updateDto.UserName;
+            user.UserName=updateDto.UserSurname;
             user.Gender=updateDto.Gender;
-            user.IsMarried=updateDto.IsMarried;
-            user.Department=updateDto.Department;
-            user.Class=updateDto.Class;
-            user.Accomodation=updateDto.Accomodation;
-            user.HasUnease=updateDto.HasUnease;
-            user.HasUneaseMedicine=updateDto.HasUneaseMedicine;
-            user.HasPsychologicalDisorder=updateDto.HasPsychologicalDisorder;
-            user.HasPsychologicalDisorderMedicine=updateDto.HasPsychologicalDisorderMedicine;
-            user.HasPsychologicalTreatment=updateDto.HasPsychologicalTreatment;
-            user.Income=updateDto.Income;
+            user.MarialStatus=updateDto.MarialStatus;
+            user.EducationField=updateDto.EducationField;
+            user.EducationLevel=updateDto.EducationLevel;
+            user.LongestResidence=updateDto.LongestResidence;
+            user.MonthlyIncome=updateDto.MonthlyIncome;
+            user.ChronicCondition=updateDto.ChronicCondition;
+            user.ChronicConditionName=updateDto.ChronicConditionName;
+            user.ChronicConditionMed=updateDto.ChronicConditionMed;
+            user.PsychologicalCondition=updateDto.PsychologicalCondition;
+            user.PsychologicalConditionMed=updateDto.PsychologicalConditionMed;
+            user.ReceivingPsychoTreatment=updateDto.ReceivingPsychoTreatment;
+
 
             var result = await _userManager.UpdateAsync(user);
 
