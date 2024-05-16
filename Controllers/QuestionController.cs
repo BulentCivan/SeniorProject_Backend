@@ -75,7 +75,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("{id:int}")]
+        [Route("solve/{id:int}")]
         public async Task<IActionResult> Solve ([FromRoute] int id, int answer) {
             var question = await _questionRepo.SolveAsync(id, answer);
             if(question == null){

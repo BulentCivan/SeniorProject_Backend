@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-    [Route("api/UserParadigm")]
+    [Route("api/testQuestion")]
     [ApiController]
     public class TestQuestionController : ControllerBase
     {
@@ -24,9 +24,9 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTestQuestions(int testId)
         {
-            Test Test=_testRepository.GetById(testId);
-            var userParadigms = await _testQuestionRepository.GetTestQuestions(Test);
-            return Ok(userParadigms);
+            var existingTest= await _testRepository.GetByIdAsync(testId);
+            var TestQuestions = await _testQuestionRepository.GetTestQuestions(existingTest);
+            return Ok(TestQuestions);
         }
 
         [HttpPost]

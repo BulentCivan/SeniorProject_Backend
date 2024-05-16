@@ -10,78 +10,79 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
+    [Route("api/mood")]
     [ApiController]
-[Route("api/[controller]")]
-public class MoodController : ControllerBase
-{
-    private readonly IMoodRepository _moodRepository;
 
-    public MoodController(IMoodRepository moodRepository)
+    public class MoodController : ControllerBase
     {
-        _moodRepository = moodRepository;
-    }
+        private readonly IMoodRepository _moodRepository;
 
-    // GET api/mood/frommonth
-    [HttpGet("frommonth")]
-    public async Task<ActionResult<List<Mood>>> GetMoodsFromMonth()
-    {
-        var moods = await _moodRepository.GetFromMonthAsync();
-        return Ok(moods);
-    }
-
-    // GET api/mood
-    [HttpGet]
-    public async Task<ActionResult<List<Mood>>> GetMoods()
-    {
-        var moods = await _moodRepository.GetAllAsync();
-        var moodDto= moods.Select(s => s.ToMoodDto());
-        return Ok(moods);
-    }
-
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetById([FromRoute] int id){
-        var mood =await _moodRepository.GetByIdAsync(id);
-        if(mood == null){
-            return NotFound();
+        public MoodController(IMoodRepository moodRepository)
+        {
+            _moodRepository = moodRepository;
         }
-        return Ok(mood.ToMoodDto());
-    }
 
-    // POST api/mood
-    [HttpPost]
-    public async Task<ActionResult<Mood>> CreateMood([FromBody] CreateMoodDto moodDto)
-    {
-        var moodModel = moodDto.ToMoodFromCreate();
-        await _moodRepository.CreateAsync(moodModel);
-        return CreatedAtAction(nameof(GetById), new { id = moodModel.Id }, moodModel);
-    }
+        // GET api/mood/frommonth
+        [HttpGet("frommonth")]
+        public async Task<ActionResult<List<Mood>>> GetMoodsFromMonth()
+        {
+            var moods = await _moodRepository.GetFromMonthAsync();
+            return Ok(moods);
+        }
 
+        // GET api/mood
+        [HttpGet]
+        public async Task<ActionResult<List<Mood>>> GetMoods()
+        {
+            var moods = await _moodRepository.GetAllAsync();
+            var moodDto= moods.Select(s => s.ToMoodDto());
+            return Ok(moods);
+        }
 
-    [HttpPut]
-    [Route("{id:int}")]
-    public async Task<IActionResult> UpdateMood([FromRoute] int id, [FromBody] UpdateMoodDto updateDto)
-    {
-        var moodModel = await _moodRepository.UpdateAsync(id, updateDto);
-            if(moodModel == null){
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById([FromRoute] int id){
+            var mood =await _moodRepository.GetByIdAsync(id);
+            if(mood == null){
                 return NotFound();
             }
+            return Ok(mood.ToMoodDto());
+        }
+
+        // POST api/mood
+        [HttpPost]
+        public async Task<ActionResult<Mood>> CreateMood([FromBody] CreateMoodDto moodDto)
+        {
+            var moodModel = moodDto.ToMoodFromCreate();
+            await _moodRepository.CreateAsync(moodModel);
+            return CreatedAtAction(nameof(GetById), new { id = moodModel.Id }, moodModel);
+        }
 
 
-            return Ok(moodModel.ToMoodDto());
+        [HttpPut]
+        [Route("{id:int}")]
+        public async Task<IActionResult> UpdateMood([FromRoute] int id, [FromBody] UpdateMoodDto updateDto)
+        {
+            var moodModel = await _moodRepository.UpdateAsync(id, updateDto);
+                if(moodModel == null){
+                    return NotFound();
+                }
+
+
+                return Ok(moodModel.ToMoodDto());
+        }
+
+        // DELETE api/mood/{id}
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<IActionResult> DeleteMood([FromRoute] int id)
+        {
+            var moodModel =await _moodRepository.DeleteAsync(id);
+                if(moodModel == null){
+                    return NotFound();
+                }
+
+                return NoContent();
+        }
+
     }
-
-    // DELETE api/mood/{id}
-    [HttpDelete]
-    [Route("{id:int}")]
-    public async Task<IActionResult> DeleteMood([FromRoute] int id)
-    {
-         var moodModel =await _moodRepository.DeleteAsync(id);
-            if(moodModel == null){
-                return NotFound();
-            }
-
-            return NoContent();
-    }
-
-}
 }

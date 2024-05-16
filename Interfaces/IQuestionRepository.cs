@@ -15,7 +15,7 @@ namespace api.Interfaces
         Task<Question> CreateAsync(Question questionModel);
 
         Task<Question?> DeleteAsync(int id);
-        Task<Question?> SolveASync(int id ,int answer);
+        Task<Question?> SolveAsync(int id ,int answer);
 
         Task<Question?> UpdateAsync(int id,UpdateQuestionRequestDto questionDto);
     }

@@ -41,10 +41,16 @@ namespace api.Repository
             return await _context.Tests.ToListAsync();
         }
 
+        public Test GetById(int id)
+        {
+            return  _context.Tests.FirstOrDefault(i => i.Id == id);
+        }
+
         public async Task<Test?> GetByIdAsync(int id)
         {
             return await _context.Tests.FirstOrDefaultAsync(i => i.Id == id);
         }
+
 
         public Task<bool> TestExist(int id)
         {
