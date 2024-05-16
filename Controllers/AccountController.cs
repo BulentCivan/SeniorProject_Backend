@@ -50,6 +50,7 @@ namespace api.Controllers
                     EducationLevel = registerDto.EducationLevel,
                     LongestResidence = registerDto.LongestResidence,
                     ChronicCondition = registerDto.ChronicCondition,
+                    ChronicConditionName = registerDto.ChronicConditionName,
                     ChronicConditionMed = registerDto.ChronicConditionMed,
                     PsychologicalCondition =  registerDto.PsychologicalCondition,
                     PsychologicalConditionMed= registerDto.PsychologicalConditionMed,
@@ -147,7 +148,7 @@ namespace api.Controllers
             user.LongestResidence=updateDto.LongestResidence;
             user.MonthlyIncome=updateDto.MonthlyIncome;
             user.ChronicCondition=updateDto.ChronicCondition;
-            user.ChronicConditionName=updateDto.ChronicConditionName;
+            user.ChronicConditionName=updateDto.ChronicConditionName ?? "None";
             user.ChronicConditionMed=updateDto.ChronicConditionMed;
             user.PsychologicalCondition=updateDto.PsychologicalCondition;
             user.PsychologicalConditionMed=updateDto.PsychologicalConditionMed;
