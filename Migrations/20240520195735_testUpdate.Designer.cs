@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240520195735_testUpdate")]
+    partial class testUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "471f4839-f633-4e5e-b9b1-3f2ffc75227a",
+                            Id = "6fbb1893-e52e-41c3-ac17-7f488a4fec3d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9972177d-36bb-4ac1-bf76-ebde33167515",
+                            Id = "3bfd3e3c-dcdc-4235-9bb8-efea7dc22ace",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -394,21 +397,6 @@ namespace api.Migrations
                     b.ToTable("UserParadigms");
                 });
 
-            modelBuilder.Entity("api.Models.UserTest", b =>
-                {
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AppUserId", "TestId");
-
-                    b.HasIndex("TestId");
-
-                    b.ToTable("UserTests");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -498,32 +486,11 @@ namespace api.Migrations
                     b.Navigation("Paradigm");
                 });
 
-            modelBuilder.Entity("api.Models.UserTest", b =>
-                {
-                    b.HasOne("api.Models.AppUser", "AppUser")
-                        .WithMany("UserTests")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Models.Test", "Test")
-                        .WithMany("UserTests")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Test");
-                });
-
             modelBuilder.Entity("api.Models.AppUser", b =>
                 {
                     b.Navigation("UserMoods");
 
                     b.Navigation("UserParadigms");
-
-                    b.Navigation("UserTests");
                 });
 
             modelBuilder.Entity("api.Models.Mood", b =>
@@ -534,11 +501,6 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.Paradigm", b =>
                 {
                     b.Navigation("UserParadigms");
-                });
-
-            modelBuilder.Entity("api.Models.Test", b =>
-                {
-                    b.Navigation("UserTests");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,16 +7,16 @@ using api.Models;
 
 namespace api.Interfaces
 {
-    public interface IQuestionRepository
-    {
-        Task<List<Question>> GetAllAsync();
-        Task<Question?> GetByIdAsync(int id); //First or default
+    // public interface IQuestionRepository
+    // {
+    //     Task<List<Question>> GetAllAsync();
+    //     Task<Question?> GetByIdAsync(int id); //First or default
 
-        Task<Question> CreateAsync(Question questionModel);
+    //     Task<Question> CreateAsync(Question questionModel);
 
-        Task<Question?> DeleteAsync(int id);
-        Task<Question?> SolveAsync(int id ,int answer);
+    //     Task<Question?> DeleteAsync(int id);
+    //     Task<Question?> SolveAsync(int id ,int answer);
 
-        Task<Question?> UpdateAsync(int id,UpdateQuestionRequestDto questionDto);
-    }
+    //     Task<Question?> UpdateAsync(int id,UpdateQuestionRequestDto questionDto);
+    // }
 }

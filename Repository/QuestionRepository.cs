@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
-    public class QuestionRepository : IQuestionRepository
+    /*public class QuestionRepository : IQuestionRepository
     {
         private readonly ApplicationDBContext _context;
         public QuestionRepository(ApplicationDBContext context){
@@ -40,9 +40,9 @@ namespace api.Repository
             
         }
 
-        public Task<Question?> GetByIdAsync(int id)
+        public async Task<Question?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Questions.FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<Question?> SolveAsync(int id,int answer)
@@ -80,5 +80,5 @@ namespace api.Repository
         }
 
         
-    }
+    }*/
 }

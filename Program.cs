@@ -90,14 +90,15 @@ options.TokenValidationParameters = new TokenValidationParameters
 });
 
 builder.Services.AddScoped<ITestRepository, TestRepository>();
-builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+//builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IParadigmRepository, ParadigmRepository>();
 builder.Services.AddScoped<IOpenAIService, OpenAIService>();
 builder.Services.AddScoped<IUserParadigmsRepository, UserParadigmsRepository>();
-builder.Services.AddScoped<ITestQuestionRepository, TestQuestionsRepository>();
+//builder.Services.AddScoped<ITestQuestionRepository, TestQuestionsRepository>();
 builder.Services.AddScoped<IMoodRepository, MoodRepository>();
 builder.Services.AddScoped<IUserMoodRepository, UserMoodRepository>();
+builder.Services.AddScoped<IUserTestRepository, UserTestRepository>();
 
  builder.Services.AddCors(options =>
             {

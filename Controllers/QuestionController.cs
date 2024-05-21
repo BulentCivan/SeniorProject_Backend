@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
-    [Route("api/question")]
+    /*[Route("api/question")]
     [ApiController]
     public class QuestionController :  ControllerBase
     {
@@ -86,5 +86,5 @@ namespace api.Controllers
         }
 
         
-    }
+    }*/
 }

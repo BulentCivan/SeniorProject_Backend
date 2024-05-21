@@ -8,7 +8,7 @@ namespace api.Dtos.Test
     public class SolveTestDto
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-         public int result { get; set; }
+        public string Name { get; set; }
+        public Dictionary<int, int> Answers { get; set; }
     }
 }

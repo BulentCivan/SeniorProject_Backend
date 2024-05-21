@@ -13,8 +13,14 @@ namespace api.Repository
     public class TestRepository : ITestRepository
     {
         private readonly ApplicationDBContext _context;
+
+
+
+
         public TestRepository(ApplicationDBContext context){
             _context = context;
+
+
         }
 
         public async Task<Test> CreateAsync(Test testModel)
@@ -41,16 +47,39 @@ namespace api.Repository
             return await _context.Tests.ToListAsync();
         }
 
-        public Test GetById(int id)
-        {
-            return  _context.Tests.FirstOrDefault(i => i.Id == id);
-        }
+        //public Test GetById(int id)
+        //{
+           // return  _context.Tests.FirstOrDefault(i => i.Id == id);
+        //}
 
         public async Task<Test?> GetByIdAsync(int id)
         {
             return await _context.Tests.FirstOrDefaultAsync(i => i.Id == id);
         }
 
+        public async Task<Test?> GetByTestTitleAsync(string Name)
+        {
+            return await _context.Tests.FirstOrDefaultAsync(i => i.Name == Name);
+        }
+
+
+        public async Task<Test?> SolveTestAsync(Test test, Dictionary<int, int> answers)
+        {
+            var existingTest = await _context.Tests.FirstOrDefaultAsync(x=> x.Id == test.Id);
+            int testResult = 0;
+    
+            for (int i = 1; i <= answers.Count; i++)
+            {
+                answers.TryGetValue(i,out int providedAnswer);
+                existingTest.Questions.Add(i);
+                existingTest.Answers.Add(providedAnswer);
+                testResult += providedAnswer;
+            }
+
+            existingTest.Result = testResult;
+            return existingTest;
+ 
+        }
 
         public Task<bool> TestExist(int id)
         {

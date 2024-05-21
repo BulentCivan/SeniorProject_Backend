@@ -6,10 +6,10 @@ using api.Models;
 
 namespace api.Interfaces
 {
-    public interface ITestQuestionRepository
-    {
-        Task<List<Question>> GetTestQuestions(Test test);
-        Task<TestQuestion> CreateAsync (TestQuestion testQuestion);
-        Task<TestQuestion> DeleteAsync (Test test, int questionId);
-    }
+    // public interface ITestQuestionRepository
+    // {
+    //     Task<List<Question>> GetTestQuestions(Test test);
+    //     Task<TestQuestion> CreateAsync (TestQuestion testQuestion);
+    //     Task<TestQuestion> DeleteAsync (Test test, int questionId);
+    // }
 }

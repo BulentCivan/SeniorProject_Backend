@@ -25,7 +25,6 @@ namespace api.Controllers
 
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAll(){
 
             var tests =await _testRepo.GetAllAsync();
@@ -44,7 +43,7 @@ namespace api.Controllers
             return Ok(test.ToTestDto());
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateTestRequestDto testDto)
         {
             var testModel = testDto.ToTestFromCreateDto();
@@ -75,6 +74,14 @@ namespace api.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpPost("solve")]
+        public async Task<IActionResult> SolveTest([FromBody] SolveTestDto testDto)
+        {
+            var testModel = testDto.ToTestFromSolveDto();
+            var solvedTest=await _testRepo.SolveTestAsync(testModel,testDto.Answers);
+            return Ok(solvedTest);
         }
     }
 }

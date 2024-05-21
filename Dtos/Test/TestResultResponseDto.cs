@@ -1,20 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.Models
+namespace api.Dtos.Test
 {
-    [Table("Tests")]
-    public class Test
+    public class TestResultResponseDto
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
         public int Result{ get; set; } 
         public List<int> Questions { get; set; } = new List<int>();
         public List<int> Answers { get; set; } = new List<int>();
-        public List<UserTest> UserTests{ get; set; } = new List<UserTest>();
-
     }
 }

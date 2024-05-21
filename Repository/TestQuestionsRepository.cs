@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
-    public class TestQuestionsRepository : ITestQuestionRepository
+    /*public class TestQuestionsRepository : ITestQuestionRepository
     {
         private readonly ApplicationDBContext _context;
         public TestQuestionsRepository(ApplicationDBContext context)
@@ -49,5 +49,5 @@ namespace api.Repository
                 Answer = question.Question.Answer
             }).ToListAsync();
         }
-    }
+    }*/
 }

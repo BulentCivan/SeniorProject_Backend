@@ -7,37 +7,37 @@ using api.Models;
 
 namespace api.Mappers
 {
-    public static class QuestionMapper
-    {
-        public static QuestionDto ToQuestionDto(this Question questionModel){
-            return new QuestionDto{
-                Id = questionModel.Id,
-                Content = questionModel.Content,
-                Type = questionModel.Type,
-                Answer=questionModel.Answer,
-                //TestId = questionModel.TestId
+    // public static class QuestionMapper
+    // {
+    //     public static QuestionDto ToQuestionDto(this Question questionModel){
+    //         return new QuestionDto{
+    //             Id = questionModel.Id,
+    //             Content = questionModel.Content,
+    //             Type = questionModel.Type,
+    //             Answer=questionModel.Answer,
+    //             //TestId = questionModel.TestId
 
-            };
-        }
+    //         };
+    //     }
 
-        public static Question ToQuestionFromCreate(this CreateQuestionDto questionDto, int testId){
-            return new Question
-            {
+    //     public static Question ToQuestionFromCreate(this CreateQuestionDto questionDto/*, int testId*/){
+    //         return new Question
+    //         {
 
-                Content = questionDto.Content,
-                Type = questionDto.Type,
-                //TestId = testId
+    //             Content = questionDto.Content,
+    //             Type = questionDto.Type,
+    //             //TestId = testId
 
-            };
-        }
+    //         };
+    //     }
 
-        public static Question ToQuestionFromUpdate(this UpdateQuestionRequestDto questionDto){
-            return new Question
-            {
-                Type = questionDto.Type,
-                Content = questionDto.Content
+    //     public static Question ToQuestionFromUpdate(this UpdateQuestionRequestDto questionDto){
+    //         return new Question
+    //         {
+    //             Type = questionDto.Type,
+    //             Content = questionDto.Content
             
-            };
-        }
-    }
+    //         };
+    //     }
+    // }
 }

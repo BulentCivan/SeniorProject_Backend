@@ -25,5 +25,17 @@ namespace api.Mappers
                 Name = testDto.Name
             };
         }
+
+        public static Test ToTestFromSolveDto(this SolveTestDto testDto)
+        {
+            return new Test
+            {
+                Id = testDto.Id,
+                Name = testDto.Name,
+
+            };
+        }
+
+       
     }
 }

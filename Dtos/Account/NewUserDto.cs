@@ -23,7 +23,7 @@ namespace api.Dtos.Account
         public string MonthlyIncome { get;  set; }
 
         public bool ChronicCondition { get;  set; } 
-        public string ChronicConditionName { get;  set; }
+        public string? ChronicConditionName { get;  set; }
 
         public string ChronicConditionMed { get;  set; }
         public bool PsychologicalCondition { get;  set; } 

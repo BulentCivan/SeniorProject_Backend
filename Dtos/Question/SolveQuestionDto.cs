@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace api.Dtos.Question
 {
-    public class CreateQuestionDto
+    public class SolveQuestionDto
     {
-        // public string Content { get; set; } = string.Empty;
-        // public string Type { get; set; } 
+        // public required int Id { get; set; } 
         
+        // public required int answer { get; set; } 
     }
 }

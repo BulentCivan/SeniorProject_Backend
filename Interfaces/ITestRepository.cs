@@ -11,7 +11,7 @@ namespace api.Interfaces
     {
         Task<List<Test>> GetAllAsync();
         Task<Test?> GetByIdAsync(int id); //First or default
-        Test GetById(int id);
+        //Test GetById(int id);
 
         Task<Test> CreateAsync(Test testModel);
 
@@ -20,6 +20,9 @@ namespace api.Interfaces
         Task<Test?> DeleteAsync(int id);
 
         Task<bool> TestExist(int id);
+
+        Task<Test?> SolveTestAsync(Test test, Dictionary<int, int> answers);
+        Task<Test?> GetByTestTitleAsync(string Name);
 
     }
 }

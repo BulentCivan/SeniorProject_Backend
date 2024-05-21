@@ -33,6 +33,7 @@ namespace api.Models
 
         public List<UserParadigm> UserParadigms{ get; set; } = new List<UserParadigm>();
         public List<UserMood> UserMoods{ get; set; } = new List<UserMood>();
+        public List<UserTest> UserTests{ get; set; } = new List<UserTest>();
 
     }
 }

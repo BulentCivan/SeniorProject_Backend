@@ -134,30 +134,51 @@ namespace api.Controllers
             if (!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
-            var userName=User.GetUsername();
-            var user = await _userManager.FindByNameAsync(userName);
+            
+            try
+            {
+                var userName = User.GetUsername(); // This will throw if User or the claim is null
+                var user = await _userManager.FindByNameAsync(userName);
+                if (user == null) return Unauthorized("User not found");
 
-            if (user == null) return Unauthorized("User not found");
-
-            user.UserName=updateDto.UserName;
-            user.UserName=updateDto.UserSurname;
-            user.Gender=updateDto.Gender;
-            user.MarialStatus=updateDto.MarialStatus;
-            user.EducationField=updateDto.EducationField;
-            user.EducationLevel=updateDto.EducationLevel;
-            user.LongestResidence=updateDto.LongestResidence;
-            user.MonthlyIncome=updateDto.MonthlyIncome;
-            user.ChronicCondition=updateDto.ChronicCondition;
-            user.ChronicConditionName=updateDto.ChronicConditionName ?? "None";
-            user.ChronicConditionMed=updateDto.ChronicConditionMed;
-            user.PsychologicalCondition=updateDto.PsychologicalCondition;
-            user.PsychologicalConditionMed=updateDto.PsychologicalConditionMed;
-            user.ReceivingPsychoTreatment=updateDto.ReceivingPsychoTreatment;
+                user.UserName=updateDto.UserName;
+                user.UserName=updateDto.UserSurname;
+                user.Gender=updateDto.Gender;
+                user.MarialStatus=updateDto.MarialStatus;
+                user.EducationField=updateDto.EducationField;
+                user.EducationLevel=updateDto.EducationLevel;
+                user.LongestResidence=updateDto.LongestResidence;
+                user.MonthlyIncome=updateDto.MonthlyIncome;
+                user.ChronicCondition=updateDto.ChronicCondition;
+                user.ChronicConditionName=updateDto.ChronicConditionName ?? "None";
+                user.ChronicConditionMed=updateDto.ChronicConditionMed;
+                user.PsychologicalCondition=updateDto.PsychologicalCondition;
+                user.PsychologicalConditionMed=updateDto.PsychologicalConditionMed;
+                user.ReceivingPsychoTreatment=updateDto.ReceivingPsychoTreatment;
 
 
-            var result = await _userManager.UpdateAsync(user);
+                var result = await _userManager.UpdateAsync(user);
 
-            return Ok(result);
+                return Ok(new { Message = "User updated successfully" });
+            }
+            
+
+            
+
+           catch (ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message); // 400 Bad Request if user is null
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Unauthorized(ex.Message); // 401 Unauthorized if claim is missing
+            }
+            catch (Exception ex)
+            {
+                // Log exception and return a generic error message
+                // Use a logging framework here to log the exception details
+                return StatusCode(500, "An unexpected error occurred.");
+            }
         }
 
         [HttpPost("updatePassword")]
