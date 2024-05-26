@@ -19,12 +19,15 @@ namespace api.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
         private readonly SignInManager<AppUser> _signinManager;
+        private readonly IUserParadigmsRepository _userParadigmsRepository;
 
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
+
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IUserParadigmsRepository userParadigmsRepo)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signinManager = signInManager;
+            _userParadigmsRepository = userParadigmsRepo;
         }
 
         [HttpPost("register")]
@@ -37,8 +40,9 @@ namespace api.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var appUser = new AppUser{
-                    
+                var appUser = new AppUser
+                {
+
                     UserName = registerDto.UserName,
                     UserSurname = registerDto.UserSurname,
                     Email = registerDto.Email,
@@ -52,39 +56,46 @@ namespace api.Controllers
                     ChronicCondition = registerDto.ChronicCondition,
                     ChronicConditionName = registerDto.ChronicConditionName,
                     ChronicConditionMed = registerDto.ChronicConditionMed,
-                    PsychologicalCondition =  registerDto.PsychologicalCondition,
-                    PsychologicalConditionMed= registerDto.PsychologicalConditionMed,
+                    PsychologicalCondition = registerDto.PsychologicalCondition,
+                    PsychologicalConditionMed = registerDto.PsychologicalConditionMed,
                     ReceivingPsychoTreatment = registerDto.ReceivingPsychoTreatment,
-                    ProgressLevel = 1
-                    
+                    ProgressLevel = 1,
+                    AdminId = 1
+
 
                 };
 
-                var createdUser = await _userManager.CreateAsync(appUser,registerDto.Password);
+                var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
 
                 if (createdUser.Succeeded)
                 {
                     var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
-                    if (roleResult.Succeeded){
+                    if (roleResult.Succeeded)
+                    {
                         return Ok(
-                            new NewUserDto{
+                            new NewUserDto
+                            {
                                 UserName = appUser.UserName,
                                 Email = appUser.Email,
                                 Token = _tokenService.CreateToken(appUser),
                                 ProgressLevel = appUser.ProgressLevel
                             }
                         );
-                    }else{
+                    }
+                    else
+                    {
                         return StatusCode(500, roleResult.Errors);
                     }
-                }else{
+                }
+                else
+                {
                     return StatusCode(500, createdUser.Errors);
                 }
             }
             catch (Exception e)
             {
-                
-                return StatusCode(500,e);
+
+                return StatusCode(500, e);
             }
         }
 
@@ -93,7 +104,8 @@ namespace api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            if (!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
@@ -101,15 +113,17 @@ namespace api.Controllers
 
             if (user == null) return Unauthorized("Invalid username!");
 
-            var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password,false);
+            var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-            if (!result.Succeeded){
+            if (!result.Succeeded)
+            {
                 return Unauthorized("User not found");
             }
 
             return Ok(
-                new NewUserDto{
-                    
+                new NewUserDto
+                {
+
                     Token = _tokenService.CreateToken(user),
                     Email = user.Email,
                     UserName = user.UserName,
@@ -121,9 +135,10 @@ namespace api.Controllers
                     LongestResidence = user.LongestResidence,
                     ChronicCondition = user.ChronicCondition,
                     ChronicConditionMed = user.ChronicConditionMed,
-                    PsychologicalCondition =  user.PsychologicalCondition,
-                    PsychologicalConditionMed= user.PsychologicalConditionMed,
+                    PsychologicalCondition = user.PsychologicalCondition,
+                    PsychologicalConditionMed = user.PsychologicalConditionMed,
                     ReceivingPsychoTreatment = user.ReceivingPsychoTreatment,
+                    AdminId = user.AdminId
                 }
             );
         }
@@ -131,41 +146,42 @@ namespace api.Controllers
         [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] UpdateUserDto updateDto)
         {
-            if (!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
-            
+
             try
             {
                 var userName = User.GetUsername(); // This will throw if User or the claim is null
                 var user = await _userManager.FindByNameAsync(userName);
                 if (user == null) return Unauthorized("User not found");
 
-                user.UserName=updateDto.UserName;
-                user.UserName=updateDto.UserSurname;
-                user.Gender=updateDto.Gender;
-                user.MarialStatus=updateDto.MarialStatus;
-                user.EducationField=updateDto.EducationField;
-                user.EducationLevel=updateDto.EducationLevel;
-                user.LongestResidence=updateDto.LongestResidence;
-                user.MonthlyIncome=updateDto.MonthlyIncome;
-                user.ChronicCondition=updateDto.ChronicCondition;
-                user.ChronicConditionName=updateDto.ChronicConditionName ?? "None";
-                user.ChronicConditionMed=updateDto.ChronicConditionMed;
-                user.PsychologicalCondition=updateDto.PsychologicalCondition;
-                user.PsychologicalConditionMed=updateDto.PsychologicalConditionMed;
-                user.ReceivingPsychoTreatment=updateDto.ReceivingPsychoTreatment;
+                user.UserName = updateDto.UserName;
+                user.UserName = updateDto.UserSurname;
+                user.Gender = updateDto.Gender;
+                user.MarialStatus = updateDto.MarialStatus;
+                user.EducationField = updateDto.EducationField;
+                user.EducationLevel = updateDto.EducationLevel;
+                user.LongestResidence = updateDto.LongestResidence;
+                user.MonthlyIncome = updateDto.MonthlyIncome;
+                user.ChronicCondition = updateDto.ChronicCondition;
+                user.ChronicConditionName = updateDto.ChronicConditionName ?? "None";
+                user.ChronicConditionMed = updateDto.ChronicConditionMed;
+                user.PsychologicalCondition = updateDto.PsychologicalCondition;
+                user.PsychologicalConditionMed = updateDto.PsychologicalConditionMed;
+                user.ReceivingPsychoTreatment = updateDto.ReceivingPsychoTreatment;
 
 
                 var result = await _userManager.UpdateAsync(user);
 
                 return Ok(new { Message = "User updated successfully" });
             }
-            
 
-            
 
-           catch (ArgumentNullException ex)
+
+
+            catch (ArgumentNullException ex)
             {
                 return BadRequest(ex.Message); // 400 Bad Request if user is null
             }
@@ -205,6 +221,28 @@ namespace api.Controllers
 
             var errors = result.Errors.Select(e => e.Description);
             return BadRequest(new { Errors = errors });
+        }
+
+        [HttpGet("patient")]
+        public async Task<IActionResult> GetPatient(string email)
+        {
+            //paradigma, test,
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return BadRequest();
+            }
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var paradigms = await _userParadigmsRepository.GetUserParadigmsByEmail(email);
+
+            // var retVal = new UserAllData()
+            // {
+            //     User = user,
+            //     Tests = tests,
+            //     Paradigms = paradigms
+            // };
+            return Ok(true);
         }
 
     }

@@ -53,11 +53,13 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
-builder.Services.AddDbContext<ApplicationDBContext>(options => {
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+{
     options.UseSqlServer(builder.Configuration.GetConnectionString("SeniorProject"));
 });
 
-builder.Services.AddIdentity<AppUser,IdentityRole>(options => {
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+{
 
 
     options.Password.RequireDigit = false;
@@ -65,18 +67,20 @@ builder.Services.AddIdentity<AppUser,IdentityRole>(options => {
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 1;
-    }).AddEntityFrameworkStores<ApplicationDBContext>();
+}).AddEntityFrameworkStores<ApplicationDBContext>();
 
-builder.Services.AddAuthentication(options => {
+builder.Services.AddAuthentication(options =>
+{
     options.DefaultAuthenticateScheme =
     options.DefaultChallengeScheme =
     options.DefaultForbidScheme =
     options.DefaultScheme =
     options.DefaultSignInScheme =
     options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options => {
+}).AddJwtBearer(options =>
+{
 
-options.TokenValidationParameters = new TokenValidationParameters
+    options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidIssuer = builder.Configuration["JWT:Issuer"],
@@ -84,8 +88,8 @@ options.TokenValidationParameters = new TokenValidationParameters
         ValidAudience = builder.Configuration["JWT:Audience"],
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
-            System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
-        )
+                System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
+            )
     };
 });
 
@@ -98,18 +102,19 @@ builder.Services.AddScoped<IUserParadigmsRepository, UserParadigmsRepository>();
 //builder.Services.AddScoped<ITestQuestionRepository, TestQuestionsRepository>();
 builder.Services.AddScoped<IMoodRepository, MoodRepository>();
 builder.Services.AddScoped<IUserMoodRepository, UserMoodRepository>();
-builder.Services.AddScoped<IUserTestRepository, UserTestRepository>();
+builder.Services.AddScoped<ITestAnswerRepository, TestAnswerRepository>();
 
- builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy", builder =>
-                {
-                    builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
-            });
+
+builder.Services.AddCors(options =>
+           {
+               options.AddPolicy("CorsPolicy", builder =>
+               {
+                   builder
+                       .AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+               });
+           });
 
 var app = builder.Build();
 

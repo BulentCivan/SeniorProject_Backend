@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace api.Models
 {
-    [Table("Tests")]
-    public class Test
+    [Table("TestAnswers")]
+    public class TestAnswer
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public int Result { get; set; }
-        public string PatientEmail { get; set; }
+        public int Question { get; set; }
+        public int Answer { get; set; }
+        public int TestId { get; set; }
 
     }
 }

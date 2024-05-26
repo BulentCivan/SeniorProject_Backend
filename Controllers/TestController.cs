@@ -18,26 +18,45 @@ namespace api.Controllers
     {
         private readonly ApplicationDBContext _context;
         private readonly ITestRepository _testRepo;
-        public TestController(ApplicationDBContext context, ITestRepository testRepo){
+        private readonly ITestAnswerRepository _testAnswerRepository;
+        public TestController(ApplicationDBContext context, ITestRepository testRepo, ITestAnswerRepository testAnswerRepository)
+        {
             _testRepo = testRepo;
             _context = context;
+            _testAnswerRepository = testAnswerRepository;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(){
+        public async Task<IActionResult> GetAll()
+        {
 
-            var tests =await _testRepo.GetAllAsync();
+            var retVal = new List<SolveTestDto>();
+            var tests = await _testRepo.GetAllAsync();
 
-            var testDto= tests.Select(s => s.ToTestDto());
 
-            return Ok(tests);
+            foreach (var test in tests)
+            {
+                var tempVal = new SolveTestDto()
+                {
+                    Name = test.Name,
+                    UserEmail = test.PatientEmail
+                };
+
+                tempVal.Answers = await _testAnswerRepository.GetTestAnswersAsync(test.Id);
+
+                retVal.Add(tempVal);
+            }
+
+            return Ok(retVal);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById([FromRoute] int id){
-            var test =await _testRepo.GetByIdAsync(id);
-            if(test == null){
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            var test = await _testRepo.GetByIdAsync(id);
+            if (test == null)
+            {
                 return NotFound();
             }
             return Ok(test.ToTestDto());
@@ -48,7 +67,7 @@ namespace api.Controllers
         {
             var testModel = testDto.ToTestFromCreateDto();
             await _testRepo.CreateAsync(testModel);
-            return CreatedAtAction(nameof(GetById), new{id=testModel.Id}, testModel.ToTestDto());
+            return CreatedAtAction(nameof(GetById), new { id = testModel.Id }, testModel.ToTestDto());
         }
 
         [HttpPut]
@@ -56,7 +75,8 @@ namespace api.Controllers
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTestRequestDto updateDto)
         {
             var testModel = await _testRepo.UpdateAsync(id, updateDto);
-            if(testModel == null){
+            if (testModel == null)
+            {
                 return NotFound();
             }
 
@@ -68,8 +88,9 @@ namespace api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var testModel =await _testRepo.DeleteAsync(id);
-            if(testModel == null){
+            var testModel = await _testRepo.DeleteAsync(id);
+            if (testModel == null)
+            {
                 return NotFound();
             }
 
@@ -80,7 +101,7 @@ namespace api.Controllers
         public async Task<IActionResult> SolveTest([FromBody] SolveTestDto testDto)
         {
             var testModel = testDto.ToTestFromSolveDto();
-            var solvedTest=await _testRepo.SolveTestAsync(testModel,testDto.Answers);
+            var solvedTest = await _testRepo.SolveTestAsync(testModel, testDto.Answers);
             return Ok(solvedTest);
         }
     }

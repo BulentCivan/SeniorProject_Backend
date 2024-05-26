@@ -27,7 +27,7 @@ namespace api.Repository
 
         public async Task<UserParadigm> DeleteAsync(AppUser appUser, int paradigmId)
         {
-            var userParadigmModel = await _context.UserParadigms.FirstOrDefaultAsync( x => x.AppUserId == appUser.Id && x.Paradigm.Id == paradigmId);
+            var userParadigmModel = await _context.UserParadigms.FirstOrDefaultAsync(x => x.AppUserId == appUser.Id && x.Paradigm.Id == paradigmId);
 
             if (userParadigmModel == null)
             {
@@ -48,7 +48,19 @@ namespace api.Repository
             {
                 Id = paradigm.ParadigmId,
                 Title = paradigm.Paradigm.Title,
-                Content=paradigm.Paradigm.Content,
+                Content = paradigm.Paradigm.Content,
+                Result = paradigm.Paradigm.Result
+            }).ToListAsync();
+        }
+
+        public async Task<List<Paradigm>> GetUserParadigmsByEmail(string email)
+        {
+            return await _context.UserParadigms.Where(p => p.AppUser.Email == email)
+            .Select(paradigm => new Paradigm
+            {
+                Id = paradigm.ParadigmId,
+                Title = paradigm.Paradigm.Title,
+                Content = paradigm.Paradigm.Content,
                 Result = paradigm.Paradigm.Result
             }).ToListAsync();
         }

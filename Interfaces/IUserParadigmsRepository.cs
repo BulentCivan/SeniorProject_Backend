@@ -9,7 +9,8 @@ namespace api.Interfaces
     public interface IUserParadigmsRepository
     {
         Task<List<Paradigm>> GetUserParadigms(AppUser user);
-        Task<UserParadigm> CreateAsync (UserParadigm userParadigm);
-        Task<UserParadigm> DeleteAsync (AppUser appUser, int paradigmId);
+        Task<List<Paradigm>> GetUserParadigmsByEmail(string email);
+        Task<UserParadigm> CreateAsync(UserParadigm userParadigm);
+        Task<UserParadigm> DeleteAsync(AppUser appUser, int paradigmId);
     }
 }

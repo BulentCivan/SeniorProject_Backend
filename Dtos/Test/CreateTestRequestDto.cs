@@ -8,5 +8,6 @@ namespace api.Dtos.Test
     public class CreateTestRequestDto
     {
         public string Name { get; set; } = string.Empty;
+        public string UserEmail { get; set; }
     }
 }

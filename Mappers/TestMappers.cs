@@ -9,12 +9,13 @@ namespace api.Mappers
 {
     public static class TestMappers
     {
-        public static TestDto ToTestDto(this Test testModel){
+        public static TestDto ToTestDto(this Test testModel)
+        {
             return new TestDto
             {
                 Id = testModel.Id,
                 Name = testModel.Name,
-                //Questions = testModel.Questions.Select(x => x.ToQuestionDto()).ToList()
+                PatientEmail = testModel.PatientEmail
             };
         }
 
@@ -22,7 +23,8 @@ namespace api.Mappers
         {
             return new Test
             {
-                Name = testDto.Name
+                Name = testDto.Name,
+                PatientEmail = testDto.UserEmail
             };
         }
 
@@ -30,12 +32,12 @@ namespace api.Mappers
         {
             return new Test
             {
-                Id = testDto.Id,
                 Name = testDto.Name,
+                PatientEmail = testDto.UserEmail
 
             };
         }
 
-       
+
     }
 }

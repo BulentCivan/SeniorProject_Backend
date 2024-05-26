@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Test;
 using api.Models;
+using api.Dtos.Test;
 
 namespace api.Interfaces
 {
@@ -15,13 +16,13 @@ namespace api.Interfaces
 
         Task<Test> CreateAsync(Test testModel);
 
-        Task<Test?> UpdateAsync(int id,UpdateTestRequestDto testDto);
+        Task<Test?> UpdateAsync(int id, UpdateTestRequestDto testDto);
 
         Task<Test?> DeleteAsync(int id);
 
         Task<bool> TestExist(int id);
 
-        Task<Test?> SolveTestAsync(Test test, Dictionary<int, int> answers);
+        Task<Test?> SolveTestAsync(Test test, List<TestAnswerDto> answers);
         Task<Test?> GetByTestTitleAsync(string Name);
 
     }

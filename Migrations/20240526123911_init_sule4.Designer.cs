@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240526123911_init_sule4")]
+    partial class init_sule4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25de793a-e770-4252-b9c1-21b48467af07",
+                            Id = "6b5667ce-3a5c-48f2-971e-1c966a6cb139",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "af33c20c-c569-47d0-a07e-8e71568979fe",
+                            Id = "a9c65433-b7bd-47f5-b78d-b4b4972539c0",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -369,11 +372,15 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Answers")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PatientEmail")
+                    b.Property<string>("Questions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -383,28 +390,6 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tests");
-                });
-
-            modelBuilder.Entity("api.Models.TestAnswer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Answer")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Question")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TestAnswers");
                 });
 
             modelBuilder.Entity("api.Models.UserMood", b =>
@@ -435,6 +420,21 @@ namespace api.Migrations
                     b.HasIndex("ParadigmId");
 
                     b.ToTable("UserParadigms");
+                });
+
+            modelBuilder.Entity("api.Models.UserTest", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "TestId");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("UserTests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -526,11 +526,32 @@ namespace api.Migrations
                     b.Navigation("Paradigm");
                 });
 
+            modelBuilder.Entity("api.Models.UserTest", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany("UserTests")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Test", "Test")
+                        .WithMany("UserTests")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Test");
+                });
+
             modelBuilder.Entity("api.Models.AppUser", b =>
                 {
                     b.Navigation("UserMoods");
 
                     b.Navigation("UserParadigms");
+
+                    b.Navigation("UserTests");
                 });
 
             modelBuilder.Entity("api.Models.Mood", b =>
@@ -541,6 +562,11 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.Paradigm", b =>
                 {
                     b.Navigation("UserParadigms");
+                });
+
+            modelBuilder.Entity("api.Models.Test", b =>
+                {
+                    b.Navigation("UserTests");
                 });
 #pragma warning restore 612, 618
         }

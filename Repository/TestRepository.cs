@@ -7,6 +7,8 @@ using api.Dtos.Test;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
+using api.Dtos.Test;
+using api.Mappers;
 
 namespace api.Repository
 {
@@ -17,7 +19,8 @@ namespace api.Repository
 
 
 
-        public TestRepository(ApplicationDBContext context){
+        public TestRepository(ApplicationDBContext context)
+        {
             _context = context;
 
 
@@ -33,7 +36,8 @@ namespace api.Repository
         public async Task<Test?> DeleteAsync(int id)
         {
             var testModel = await _context.Tests.FirstOrDefaultAsync(x => x.Id == id);
-            if (testModel == null){
+            if (testModel == null)
+            {
                 return null;
             }
 
@@ -49,7 +53,7 @@ namespace api.Repository
 
         //public Test GetById(int id)
         //{
-           // return  _context.Tests.FirstOrDefault(i => i.Id == id);
+        // return  _context.Tests.FirstOrDefault(i => i.Id == id);
         //}
 
         public async Task<Test?> GetByIdAsync(int id)
@@ -63,22 +67,22 @@ namespace api.Repository
         }
 
 
-        public async Task<Test?> SolveTestAsync(Test test, Dictionary<int, int> answers)
+        public async Task<Test?> SolveTestAsync(Test test, List<TestAnswerDto> answers)
         {
-            var existingTest = await _context.Tests.FirstOrDefaultAsync(x=> x.Id == test.Id);
+            var existingTest = await _context.Tests
+            .Where(x => x.Name.ToLower().Equals(test.Name.ToLower()) && x.PatientEmail.Equals(test.PatientEmail))
+            .FirstOrDefaultAsync();
             int testResult = 0;
-    
-            for (int i = 1; i <= answers.Count; i++)
+
+            foreach (var answer in answers)
             {
-                answers.TryGetValue(i,out int providedAnswer);
-                existingTest.Questions.Add(i);
-                existingTest.Answers.Add(providedAnswer);
-                testResult += providedAnswer;
+                await CreateTestAnswerAsync(answer.ToTestAnswerFromTestAnswerDto(existingTest));
+                testResult += answer.Answer;
             }
 
             existingTest.Result = testResult;
             return existingTest;
- 
+
         }
 
         public Task<bool> TestExist(int id)
@@ -88,8 +92,9 @@ namespace api.Repository
 
         public async Task<Test?> UpdateAsync(int id, UpdateTestRequestDto testDto)
         {
-            var existingTest = await _context.Tests.FirstOrDefaultAsync(x=> x.Id == id);
-            if(existingTest == null){
+            var existingTest = await _context.Tests.FirstOrDefaultAsync(x => x.Id == id);
+            if (existingTest == null)
+            {
                 return null;
             }
 
@@ -99,5 +104,13 @@ namespace api.Repository
 
             return existingTest;
         }
+
+        public async Task<TestAnswer> CreateTestAnswerAsync(TestAnswer testAnswer)
+        {
+            await _context.TestAnswers.AddAsync(testAnswer);
+            await _context.SaveChangesAsync();
+            return testAnswer;
+        }
+
     }
 }

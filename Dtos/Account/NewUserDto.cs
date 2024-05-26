@@ -33,6 +33,7 @@ namespace api.Dtos.Account
         public string ReceivingPsychoTreatment { get;  set; } 
 
         public int ProgressLevel { get;  set; }
+        public int AdminId { get; set; }
 
     }
 }

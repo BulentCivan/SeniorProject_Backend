@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240521134933_init_sule")]
+    partial class init_sule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25de793a-e770-4252-b9c1-21b48467af07",
+                            Id = "310bc244-4af0-4eb3-8c2f-c28f26ce7c0c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "af33c20c-c569-47d0-a07e-8e71568979fe",
+                            Id = "2364a830-8f52-4141-8dbf-7e14ddfe7eaa",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -169,37 +172,12 @@ namespace api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("api.Models.Admin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Admins");
-                });
-
             modelBuilder.Entity("api.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AdminId")
                         .HasColumnType("int");
 
                     b.Property<int?>("Age")
@@ -369,11 +347,15 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Answers")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PatientEmail")
+                    b.Property<string>("Questions")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -383,28 +365,6 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tests");
-                });
-
-            modelBuilder.Entity("api.Models.TestAnswer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Answer")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Question")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TestAnswers");
                 });
 
             modelBuilder.Entity("api.Models.UserMood", b =>
@@ -435,6 +395,21 @@ namespace api.Migrations
                     b.HasIndex("ParadigmId");
 
                     b.ToTable("UserParadigms");
+                });
+
+            modelBuilder.Entity("api.Models.UserTest", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "TestId");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("UserTests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -526,11 +501,32 @@ namespace api.Migrations
                     b.Navigation("Paradigm");
                 });
 
+            modelBuilder.Entity("api.Models.UserTest", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany("UserTests")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Test", "Test")
+                        .WithMany("UserTests")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Test");
+                });
+
             modelBuilder.Entity("api.Models.AppUser", b =>
                 {
                     b.Navigation("UserMoods");
 
                     b.Navigation("UserParadigms");
+
+                    b.Navigation("UserTests");
                 });
 
             modelBuilder.Entity("api.Models.Mood", b =>
@@ -541,6 +537,11 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.Paradigm", b =>
                 {
                     b.Navigation("UserParadigms");
+                });
+
+            modelBuilder.Entity("api.Models.Test", b =>
+                {
+                    b.Navigation("UserTests");
                 });
 #pragma warning restore 612, 618
         }
