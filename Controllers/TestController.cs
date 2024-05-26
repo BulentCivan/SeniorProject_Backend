@@ -40,7 +40,7 @@ namespace api.Controllers
                 var tempVal = new SolveTestDto()
                 {
                     Name = test.Name,
-                    UserEmail = test.PatientEmail
+                    mail = test.PatientEmail
                 };
 
                 tempVal.Answers = await _testAnswerRepository.GetTestAnswersAsync(test.Id);

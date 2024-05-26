@@ -9,7 +9,7 @@ namespace api.Dtos.Test
     public class SolveTestDto
     {
         public string Name { get; set; }
-        public string UserEmail { get; set; }
+        public string mail { get; set; }
         public List<TestAnswerDto> Answers { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace api.Data
                 .HasOne(t => t.Paradigm)
                 .WithMany(t => t.UserParadigms)
                 .HasForeignKey(r => r.ParadigmId);
-
+            builder.Entity<Test>().HasKey(t => new { t.Name, t.PatientEmail });
             /*builder.Entity<TestQuestion>(b => b.HasKey(n => new {n.TestId, n.QuestionId}));
             builder.Entity<TestQuestion>()
                 .HasOne(m => m.Test)

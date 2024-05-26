@@ -24,7 +24,7 @@ namespace api.Mappers
             return new Test
             {
                 Name = testDto.Name,
-                PatientEmail = testDto.UserEmail
+                PatientEmail = testDto.mail
             };
         }
 
@@ -33,7 +33,7 @@ namespace api.Mappers
             return new Test
             {
                 Name = testDto.Name,
-                PatientEmail = testDto.UserEmail
+                PatientEmail = testDto.mail
 
             };
         }
