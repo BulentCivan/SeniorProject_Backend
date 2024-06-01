@@ -6,7 +6,7 @@ using api.Data;
 using api.Dtos.Test;
 using api.Interfaces;
 using api.Mappers;
-using api.Migrations;
+
 using api.Models;
 using Microsoft.EntityFrameworkCore;
 

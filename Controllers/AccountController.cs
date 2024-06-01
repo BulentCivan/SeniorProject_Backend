@@ -42,9 +42,7 @@ namespace api.Controllers
 
                 var appUser = new AppUser
                 {
-
-                    UserName = registerDto.UserName,
-                    UserSurname = registerDto.UserSurname,
+                    UserName = registerDto.Email,
                     Email = registerDto.Email,
                     Age = (int)registerDto.Age,
                     MonthlyIncome = registerDto.MonthlyIncome,
@@ -62,7 +60,6 @@ namespace api.Controllers
                     ProgressLevel = 1,
                     AdminId = 1
 
-
                 };
 
                 var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
@@ -75,7 +72,6 @@ namespace api.Controllers
                         return Ok(
                             new NewUserDto
                             {
-                                UserName = appUser.UserName,
                                 Email = appUser.Email,
                                 Token = _tokenService.CreateToken(appUser),
                                 ProgressLevel = appUser.ProgressLevel
@@ -111,7 +107,7 @@ namespace api.Controllers
 
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == loginDto.UserMail.ToLower());
 
-            if (user == null) return Unauthorized("Invalid username!");
+            if (user == null) return Unauthorized("Invalid user mail!");
 
             var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
@@ -126,7 +122,6 @@ namespace api.Controllers
 
                     Token = _tokenService.CreateToken(user),
                     Email = user.Email,
-                    UserName = user.UserName,
                     ProgressLevel = user.ProgressLevel,
                     Gender = user.Gender,
                     MarialStatus = user.MarialStatus,
@@ -157,8 +152,6 @@ namespace api.Controllers
                 var user = await _userManager.FindByNameAsync(userName);
                 if (user == null) return Unauthorized("User not found");
 
-                user.UserName = updateDto.UserName;
-                user.UserName = updateDto.UserSurname;
                 user.Gender = updateDto.Gender;
                 user.MarialStatus = updateDto.MarialStatus;
                 user.EducationField = updateDto.EducationField;

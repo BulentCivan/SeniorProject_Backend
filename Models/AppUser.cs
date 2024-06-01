@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,8 @@ namespace api.Models
 {
     public class AppUser : IdentityUser
     {
-        public string? UserSurname { get; set; }
+        [Required]
+        public override string Email { get; set; }
         public int? Age { get; set; }
         public string Gender { get; set; }
         public string MarialStatus { get; set; }

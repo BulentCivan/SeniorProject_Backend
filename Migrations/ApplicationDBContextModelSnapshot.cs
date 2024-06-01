@@ -17,7 +17,7 @@ namespace api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25de793a-e770-4252-b9c1-21b48467af07",
+                            Id = "e0cd0e40-2785-47d0-a0ee-10707b1f07c6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "af33c20c-c569-47d0-a07e-8e71568979fe",
+                            Id = "ba2e6fee-d435-45ae-a77c-b00a8a1cc5d7",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -363,24 +363,19 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Test", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PatientEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Result")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Name", "PatientEmail");
 
                     b.ToTable("Tests");
                 });

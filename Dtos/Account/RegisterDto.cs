@@ -8,13 +8,13 @@ namespace api.Dtos.Account
 {
     public class RegisterDto
     {
-        public string? UserName {get; set;} 
-        public string? UserSurname {get; set;} 
+        [EmailAddress]
+        public string? Email {get; set;} 
         public int? Age {get; set;}
 
         public string? Password {get; set;}
-        [EmailAddress]
-        public string? Email {get; set;} 
+
+
         public string Gender { get;  set; }
         public string MarialStatus { get;  set; }
 

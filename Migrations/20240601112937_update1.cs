@@ -8,11 +8,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class Relations : Migration
+    public partial class update1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -32,20 +47,22 @@ namespace api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
+                    UserSurname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Age = table.Column<int>(type: "int", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsMarried = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Class = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Accomodation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HasUnease = table.Column<bool>(type: "bit", nullable: false),
-                    HasUneaseMedicine = table.Column<bool>(type: "bit", nullable: false),
-                    HasPsychologicalDisorder = table.Column<bool>(type: "bit", nullable: false),
-                    HasPsychologicalDisorderMedicine = table.Column<bool>(type: "bit", nullable: false),
-                    HasPsychologicalTreatment = table.Column<bool>(type: "bit", nullable: false),
-                    Income = table.Column<int>(type: "int", nullable: false),
+                    MarialStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EducationField = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EducationLevel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LongestResidence = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MonthlyIncome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ChronicCondition = table.Column<bool>(type: "bit", nullable: false),
+                    ChronicConditionName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ChronicConditionMed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PsychologicalCondition = table.Column<bool>(type: "bit", nullable: false),
+                    PsychologicalConditionMed = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReceivingPsychoTreatment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProgressLevel = table.Column<int>(type: "int", nullable: false),
+                    AdminId = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -67,6 +84,21 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Moods",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    mood = table.Column<int>(type: "int", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Moods", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Paradigms",
                 columns: table => new
                 {
@@ -83,16 +115,32 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tests",
+                name: "TestAnswers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Question = table.Column<int>(type: "int", nullable: false),
+                    Answer = table.Column<int>(type: "int", nullable: false),
+                    TestId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tests", x => x.Id);
+                    table.PrimaryKey("PK_TestAnswers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tests",
+                columns: table => new
+                {
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PatientEmail = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Result = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tests", x => new { x.Name, x.PatientEmail });
                 });
 
             migrationBuilder.CreateTable(
@@ -202,6 +250,30 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserMoods",
+                columns: table => new
+                {
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MoodId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserMoods", x => new { x.AppUserId, x.MoodId });
+                    table.ForeignKey(
+                        name: "FK_UserMoods_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserMoods_Moods_MoodId",
+                        column: x => x.MoodId,
+                        principalTable: "Moods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserParadigms",
                 columns: table => new
                 {
@@ -225,78 +297,13 @@ namespace api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Questions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Answer = table.Column<int>(type: "int", nullable: false),
-                    TestId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Questions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Questions_Tests_TestId",
-                        column: x => x.TestId,
-                        principalTable: "Tests",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Results",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TestId = table.Column<int>(type: "int", nullable: true),
-                    result = table.Column<double>(type: "float", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Results", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Results_Tests_TestId",
-                        column: x => x.TestId,
-                        principalTable: "Tests",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Profiles",
-                columns: table => new
-                {
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ResultId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Profiles", x => new { x.AppUserId, x.ResultId });
-                    table.ForeignKey(
-                        name: "FK_Profiles_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Profiles_Results_ResultId",
-                        column: x => x.ResultId,
-                        principalTable: "Results",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "5f3faf7d-3b51-4664-9596-762d098db987", null, "User", "USER" },
-                    { "95e973a0-1d18-4e8c-80f3-7cc82d935f40", null, "Admin", "ADMIN" }
+                    { "ba2e6fee-d435-45ae-a77c-b00a8a1cc5d7", null, "User", "USER" },
+                    { "e0cd0e40-2785-47d0-a0ee-10707b1f07c6", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -339,21 +346,9 @@ namespace api.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Profiles_ResultId",
-                table: "Profiles",
-                column: "ResultId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Questions_TestId",
-                table: "Questions",
-                column: "TestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Results_TestId",
-                table: "Results",
-                column: "TestId",
-                unique: true,
-                filter: "[TestId] IS NOT NULL");
+                name: "IX_UserMoods_MoodId",
+                table: "UserMoods",
+                column: "MoodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserParadigms_ParadigmId",
@@ -364,6 +359,9 @@ namespace api.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Admins");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -380,10 +378,13 @@ namespace api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Profiles");
+                name: "TestAnswers");
 
             migrationBuilder.DropTable(
-                name: "Questions");
+                name: "Tests");
+
+            migrationBuilder.DropTable(
+                name: "UserMoods");
 
             migrationBuilder.DropTable(
                 name: "UserParadigms");
@@ -392,16 +393,13 @@ namespace api.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Results");
+                name: "Moods");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Paradigms");
-
-            migrationBuilder.DropTable(
-                name: "Tests");
         }
     }
 }
