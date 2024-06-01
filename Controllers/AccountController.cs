@@ -69,14 +69,7 @@ namespace api.Controllers
                     var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
                     if (roleResult.Succeeded)
                     {
-                        return Ok(
-                            new NewUserDto
-                            {
-                                Email = appUser.Email,
-                                Token = _tokenService.CreateToken(appUser),
-                                ProgressLevel = appUser.ProgressLevel
-                            }
-                        );
+                        return Ok();
                     }
                     else
                     {
