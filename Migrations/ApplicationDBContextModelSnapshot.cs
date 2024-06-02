@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e0cd0e40-2785-47d0-a0ee-10707b1f07c6",
+                            Id = "fa7fd51c-4b7d-48a1-8945-83a6e18c75cb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ba2e6fee-d435-45ae-a77c-b00a8a1cc5d7",
+                            Id = "e276c6a3-7131-466f-bb48-78b4126f0e57",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -229,6 +229,7 @@ namespace api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -298,9 +299,6 @@ namespace api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("UserSurname")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -349,6 +347,10 @@ namespace api.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("PatientEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Result")
                         .HasColumnType("nvarchar(max)");
