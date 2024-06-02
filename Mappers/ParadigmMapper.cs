@@ -13,7 +13,7 @@ namespace api.Mappers
             return new ParadigmDto{
                 Id = paradigmModel.Id,
                 Content = paradigmModel.Content,
-                Title = paradigmModel.Title,
+                userMail = paradigmModel.PatientEmail,
                 Result=paradigmModel.Result
 
             };
@@ -23,7 +23,7 @@ namespace api.Mappers
             return new Paradigm
             {
 
-                Title = paradigmDto.Title,
+                Title = paradigmDto.userMail,
                 Content = paradigmDto.Content
 
 

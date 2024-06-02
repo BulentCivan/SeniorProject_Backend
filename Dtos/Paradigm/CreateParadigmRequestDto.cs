@@ -8,6 +8,7 @@ namespace api.Dtos.Paradigm
     public class CreateParadigmRequestDto
     {
         //public string? Title { get; set; }
+        public string userMail { get; set; }
         public string? Content { get; set; }
     }
 }

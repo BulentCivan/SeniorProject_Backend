@@ -8,7 +8,7 @@ namespace api.Dtos.Paradigm
     public class ParadigmDto
     {
         public int Id { get; set; }
-        public string? Title { get; set; }
+        public string? userMail { get; set; }
         public string? Content { get; set; }
         public string? Result { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;

@@ -7,9 +7,6 @@ namespace api.Dtos.Account
 {
     public class UpdateUserDto
     {
-        public string? UserName {get; set;} 
-        public string? UserSurname {get; set;} 
-
         public int? Age {get; set;}
         public string Gender { get;  set; }
         public string MarialStatus { get;  set; }

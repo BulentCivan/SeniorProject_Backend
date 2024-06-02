@@ -13,6 +13,7 @@ namespace api.Models
         public string? Title { get; set; }
         public string? Content { get; set; }
         public string? Result { get; set; }
+        public string PatientEmail { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.Now;
         public List<UserParadigm> UserParadigms{ get; set; } = new List<UserParadigm>();
 

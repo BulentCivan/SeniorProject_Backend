@@ -18,15 +18,10 @@ namespace api.Data
         }
 
         public DbSet<Test> Tests { get; set; }
-
-        //public DbSet<Question> Questions { get;set;}
         public DbSet<Paradigm> Paradigms { get; set; }
         public DbSet<Mood> Moods { get; set; }
-
         public DbSet<UserParadigm> UserParadigms { get; set; }
-
         public DbSet<UserMood> UserMoods { get; set; }
-        //public DbSet<TestQuestion> TestQuestions { get;set;}
         public DbSet<Admin> Admins { get; set; }
         public DbSet<TestAnswer> TestAnswers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
@@ -43,15 +38,6 @@ namespace api.Data
                 .WithMany(t => t.UserParadigms)
                 .HasForeignKey(r => r.ParadigmId);
             builder.Entity<Test>().HasKey(t => new { t.Name, t.PatientEmail });
-            /*builder.Entity<TestQuestion>(b => b.HasKey(n => new {n.TestId, n.QuestionId}));
-            builder.Entity<TestQuestion>()
-                .HasOne(m => m.Test)
-                .WithMany(m => m.TestQuestions)
-                .HasForeignKey(n => n.TestId);
-            builder.Entity<TestQuestion>()
-                .HasOne(m => m.Question)
-                .WithMany(m => m.TestQuestions)
-                .HasForeignKey(n => n.QuestionId);*/
 
             builder.Entity<UserMood>(b => b.HasKey(n => new { n.AppUserId, n.MoodId }));
             builder.Entity<UserMood>()
