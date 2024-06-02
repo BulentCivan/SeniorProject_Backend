@@ -49,7 +49,7 @@ namespace api.Controllers
         public async Task<IActionResult> Create([FromBody] CreateParadigmRequestDto paradigmDto)
         {
             var paradigmModel = paradigmDto.ToParadigmFromCreate();
-            paradigmModel.Result=_openAIService.EvaluateText(paradigmModel.Title,paradigmModel.Content).Result.ToString();
+            //paradigmModel.Result=_openAIService.EvaluateText(paradigmModel.Title,paradigmModel.Content).Result.ToString();
             await _paradigmRepo.CreateAsync(paradigmModel);
             return CreatedAtAction(nameof(GetById), new{id=paradigmModel.Id}, paradigmModel.ToParadigmDto());
         }

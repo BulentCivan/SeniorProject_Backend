@@ -7,7 +7,7 @@ namespace api.Dtos.Paradigm
 {
     public class CreateParadigmRequestDto
     {
-        public string? Title { get; set; }
+        //public string? Title { get; set; }
         public string? Content { get; set; }
     }
 }
