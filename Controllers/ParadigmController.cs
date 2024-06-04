@@ -45,7 +45,7 @@ namespace api.Controllers
             return Ok(paradigm.ToParadigmDto());
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateParadigmRequestDto paradigmDto)
         {
             var paradigmModel = paradigmDto.ToParadigmFromCreate();
